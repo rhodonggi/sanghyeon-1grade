@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>학교자율과정 수강 신청 | 1학년</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#1D9E75;--gd:#0F6E56;--gl:#E1F5EE;--gy:#f5f5f0;--bd:#e5e5e5;--tx:#1a1a1a;--mu:#666;--lt:#aaa}
+body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--gy);color:var(--tx);min-height:100vh}
+.topbar{background:#fff;border-bottom:1px solid var(--bd);padding:11px 16px;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center}
+.topbar-t{font-size:15px;font-weight:700}.topbar-s{font-size:11px;color:var(--mu);margin-top:1px}.topbar-b{font-size:11px;color:var(--mu);text-align:right}
+.pchip{background:#FFF3CD;color:#856404;font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;border:1px solid #FFE083;margin-left:6px}
+.wrap{max-width:680px;margin:0 auto;padding:14px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:12px}
+.ct{font-size:15px;font-weight:700;margin-bottom:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.fg label{font-size:12px;color:var(--mu);display:block;margin-bottom:4px;font-weight:500}
+.fg input,.fg select{border:1px solid var(--bd);border-radius:9px;padding:10px 12px;font-size:14px;width:100%;background:#fff;color:var(--tx);-webkit-appearance:none;appearance:none}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--g)}
+.btn{border:none;border-radius:10px;padding:12px 18px;font-size:14px;font-weight:700;cursor:pointer;width:100%;transition:background .15s,transform .1s}
+.btn:active{transform:scale(.98)}
+.btn-g{background:var(--g);color:#fff}.btn-g:hover{background:var(--gd)}.btn-g:disabled{background:#ccc;cursor:default;transform:none}
+.btn-o{background:#fff;color:var(--mu);border:1px solid var(--bd)}.btn-o:hover{background:var(--gy)}
+.al{border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:12px;line-height:1.6}
+.al-ok{background:#E1F5EE;color:#085041}.al-err{background:#FDECEC;color:#7B1818}
+.al-info{background:#EBF4FF;color:#0C3A75}.al-warn{background:#FFF8E7;color:#6B4700}.al-purple{background:#EEEDFE;color:#3C3489}
+.steps{display:flex;align-items:center;margin-bottom:16px}
+.step-item{display:flex;flex-direction:column;align-items:center;flex:1;position:relative}
+.step-item:not(:last-child)::after{content:"";position:absolute;top:14px;left:50%;width:100%;height:2px;background:var(--bd);z-index:0}
+.step-item.done::after{background:var(--g)}
+.step-circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--bd);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--lt);z-index:1;position:relative}
+.step-item.done .step-circle{background:var(--g);border-color:var(--g);color:#fff}
+.step-item.active .step-circle{border-color:var(--g);color:var(--g);font-weight:700}
+.step-label{font-size:10px;color:var(--lt);margin-top:4px;text-align:center}
+.step-item.active .step-label{color:var(--g);font-weight:600}.step-item.done .step-label{color:var(--g)}
+.pgrid{display:grid;grid-template-columns:1fr;gap:8px}
+.pc{background:#fff;border:1.5px solid var(--bd);border-radius:12px;padding:14px;cursor:pointer;transition:all .15s;position:relative}
+.pc:hover{border-color:var(--g);background:#f9fffe}
+.pc.selected{border:2.5px solid var(--g);background:var(--gl)}
+.pc.disabled{opacity:.4;cursor:default;pointer-events:none}
+.pc.locked{border:2px solid var(--g);background:var(--gl);cursor:default}
+.pc.same-c{opacity:.4;cursor:not-allowed;pointer-events:none}
+.pc-header{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+.pc-num{min-width:26px;height:26px;border-radius:50%;background:var(--g);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.pc-num.gray{background:#ccc}
+.pc-name{font-size:13px;font-weight:700;line-height:1.35;color:var(--tx)}
+.pc-meta{font-size:11px;color:var(--mu);margin-bottom:5px;margin-left:34px}
+.pc-desc{font-size:11px;color:var(--mu);margin-bottom:6px;margin-left:34px;line-height:1.5}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:5px;margin-right:4px}
+.tag-통합{background:#FFF8E7;color:#633806;border:1px solid #F0C040}
+.tag-A{background:#EBF4FF;color:#0C447C}.tag-B{background:#EEEDFE;color:#3C3489}
+.tag-C{background:#EAF3DE;color:#27500A}.tag-D{background:#FBEAF0;color:#72243E}
+.pc-bar-wrap{margin-left:34px}
+.pc-seats{font-size:11px;font-weight:700;float:right}
+.seats-ok{color:var(--g)}.seats-warn{color:#E67E22}.seats-full{color:#C0392B}
+.bar-bg{background:var(--gy);border-radius:4px;height:4px;overflow:hidden;clear:both;margin-top:2px}
+.bar-fill{height:4px;border-radius:4px}
+.lock-badge{font-size:11px;color:var(--gd);font-weight:700;margin-top:6px;margin-left:34px}
+.same-c-badge{font-size:10px;color:#C0392B;margin-top:5px;margin-left:34px}
+.confirm-box{border:1.5px solid var(--g);border-radius:12px;overflow:hidden;margin-bottom:12px}
+.confirm-head{background:var(--g);color:#fff;padding:10px 14px;font-size:13px;font-weight:700}
+.confirm-row{padding:11px 14px;border-bottom:1px solid #e8f5ee;display:flex;gap:10px;align-items:flex-start}
+.confirm-row:last-child{border-bottom:none}
+.confirm-key{font-size:12px;font-weight:700;color:var(--mu);min-width:70px;flex-shrink:0;padding-top:2px}
+.confirm-val{font-size:13px;color:var(--tx);line-height:1.5}
+.btn-row{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:12px}
+.gate-box{max-width:360px;margin:60px auto 0}
+
+.cd-box{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:40px 20px;text-align:center;max-width:400px;margin:60px auto 0}
+.cd-title{font-size:14px;color:var(--mu);margin-bottom:6px}
+.cd-sub{font-size:20px;font-weight:700;color:var(--tx);margin-bottom:24px}
+.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:320px;margin:0 auto 20px}
+.cd-unit{background:var(--gy);border-radius:10px;padding:14px 4px}
+.cd-num{font-size:28px;font-weight:700;line-height:1;color:var(--tx)}
+.cd-lbl{font-size:11px;color:var(--lt);margin-top:4px}
+.closed-box{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:40px 20px;text-align:center;max-width:400px;margin:60px auto 0}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div>
+    <div class="topbar-t">학교자율과정 수강 신청<span class="pchip" id="p-chip">🔧 연습</span></div>
+    <div class="topbar-s">2026학년도 1학기 · 1학년</div>
+  </div>
+  <div class="topbar-b" id="top-badge"></div>
+</div>
+<div class="wrap">
+  <!-- 카운트다운 -->
+  <div id="v-countdown" style="display:none">
+    <div class="cd-box">
+      <div style="font-size:14px;color:var(--mu);margin-bottom:6px">2026학년도 1학기 · 1학년</div>
+      <div style="font-size:20px;font-weight:700;color:var(--tx);margin-bottom:24px">학교자율과정 수강 신청</div>
+      <div id="cd-display"></div>
+      <div style="font-size:12px;color:var(--mu);margin-top:4px">신청 시작: 2026.7.7(화) 오후 5:00</div>
+      <div class="al al-info" style="margin-top:16px;font-size:12px">⏰ 신청 시작 시각이 되면 자동으로 접속 화면이 열립니다.</div>
+    </div>
+  </div>
+  <!-- 마감 -->
+  <div id="v-closed" style="display:none">
+    <div class="closed-box">
+      <div style="font-size:40px;margin-bottom:16px">🔒</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px">신청이 마감되었습니다</div>
+      <div style="font-size:13px;color:var(--mu)">마감: 2026.7.9(목) 09:00</div>
+    </div>
+  </div>
+  <div id="v-gate" style="display:none">
+    <div class="gate-box">
+      <div class="card">
+        <div class="ct">🔐 접속 코드 입력</div>
+        <div style="font-size:13px;color:var(--mu);margin-bottom:14px;line-height:1.6">이 페이지는 <strong>상현고등학교 1학년</strong> 학생 전용입니다.<br>담당 선생님이 안내한 접속 코드를 입력해주세요.</div>
+        <div class="fg" style="margin-bottom:10px">
+          <label>접속 코드</label>
+          <input type="text" id="inp-gate" placeholder="접속 코드 입력" inputmode="numeric">
+        </div>
+        <div id="gate-msg"></div>
+        <button class="btn btn-g" id="gate-btn" type="button">확인</button>
+      </div>
+    </div>
+  </div>
+  <div id="v-login" style="display:none">
+    <div class="card">
+      <div class="ct">학생 정보 입력</div>
+      <div class="al al-purple">⚠️ <strong>1학년 학생 전용</strong>입니다. 본인의 정확한 정보를 입력하세요.</div>
+      <div class="g2">
+        <div class="fg"><label>학년</label><select id="inp-grade"><option value="1">1학년</option></select></div>
+        <div class="fg"><label>반</label>
+          <select id="inp-class"><option value="">선택</option>
+            <option value="1">1반</option><option value="2">2반</option><option value="3">3반</option>
+            <option value="4">4반</option><option value="5">5반</option><option value="6">6반</option>
+            <option value="7">7반</option><option value="8">8반</option><option value="9">9반</option>
+            <option value="10">10반</option></select></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label>번호</label><input type="number" id="inp-num" placeholder="출석 번호" min="1" max="50"></div>
+        <div class="fg"><label>이름</label><input type="text" id="inp-name" placeholder="이름 입력"></div>
+      </div>
+      <div class="fg" style="margin-bottom:10px">
+        <label>생년월일 (본인 확인용, 8자리)</label>
+        <input type="text" id="inp-dob" placeholder="예: 20101015" inputmode="numeric" maxlength="8">
+      </div>
+      <div class="al al-warn">🔒 생년월일이 일치하지 않으면 입장이 제한됩니다.</div>
+      <div id="login-msg"></div>
+      <button class="btn btn-g" id="login-btn" type="button">입장하기</button>
+    </div>
+    <div style="text-align:center;font-size:11px;color:var(--lt);margin-top:8px">신청 기간: 2026.7.7(화) 17:00 ~ 7.9(목) 09:00</div>
+  </div>
+  <div id="v-main" style="display:none">
+    <div id="main-banner"></div>
+    <div id="v-done" style="display:none"><div id="done-content"></div></div>
+    <div id="v-steps">
+      <div class="steps" id="step-indicator"></div>
+      <div id="step-a" style="display:none">
+        <div class="card">
+          <div class="ct">A타임 프로그램 선택 <span style="font-size:12px;font-weight:400;color:var(--mu)">1개 선택</span></div>
+          <div class="al al-warn" style="font-size:12px">⚠️ <strong>1~7번(A/B통합)</strong>을 선택하면 B타임도 <strong>동일 프로그램이 자동 배정</strong>됩니다.</div>
+          <div class="pgrid" id="grid-a"></div>
+        </div>
+      </div>
+      <div id="step-b" style="display:none">
+        <div class="card">
+          <div class="ct">B타임 프로그램 선택 <span style="font-size:12px;font-weight:400;color:var(--mu)">1개 선택</span></div>
+          <div id="b-notice"></div>
+          <div class="pgrid" id="grid-b"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-o" id="btn-b-prev" type="button">← 이전</button>
+          <button class="btn btn-g" id="btn-b-next" type="button" disabled>다음 →</button>
+        </div>
+      </div>
+      <div id="step-c" style="display:none">
+        <div class="card">
+          <div class="ct">C타임 진로체험 선택 <span style="font-size:12px;font-weight:400;color:var(--mu)">1개 선택</span></div>
+          <div class="al al-info" style="font-size:12px">📌 7.15(수) 진로체험 · C타임과 D타임에 서로 다른 직업을 선택해야 합니다.</div>
+          <div class="pgrid" id="grid-c"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-o" id="btn-c-prev" type="button">← 이전</button>
+          <button class="btn btn-g" id="btn-c-next" type="button" disabled>다음 →</button>
+        </div>
+      </div>
+      <div id="step-d" style="display:none">
+        <div class="card">
+          <div class="ct">D타임 진로체험 선택 <span style="font-size:12px;font-weight:400;color:var(--mu)">1개 선택 (C타임과 다른 직업)</span></div>
+          <div class="al al-warn" style="font-size:12px">⚠️ C타임에서 선택한 직업은 선택할 수 없습니다.</div>
+          <div class="pgrid" id="grid-d"></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-o" id="btn-d-prev" type="button">← 이전</button>
+          <button class="btn btn-g" id="btn-d-next" type="button" disabled>다음 →</button>
+        </div>
+      </div>
+      <div id="step-confirm" style="display:none">
+        <div class="card">
+          <div class="ct">신청 내용 최종 확인</div>
+          <div id="confirm-content"></div>
+          <div class="al al-warn" style="font-size:12px">⚠️ 신청 완료 후 변경은 담당 선생님께 문의하세요.</div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-o" id="btn-cf-prev" type="button">← 이전</button>
+          <button class="btn btn-g" id="btn-submit" type="button">✅ 신청 완료</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+const HASH_SALT = 'sanghyeon2026-asedu-1grade';
+const STUDENT_HASH = {"1-1-1": "03948fca8c9020005d91fcb13f8b6624c2cd1f716cb74d19040b2b1fe83233b6", "1-1-2": "8be66a34eef4bfcb311f1199a778b5e2ab48a8905499717e5bf6c89af0634fbe", "1-1-3": "210552485f4eea84acdc4adbb57f5452973cdb9885a7b76ea6108f0fe5e3fc53", "1-1-4": "9975b971c39123f9cbdf3a84a696750932cd2f8bf514364fb34a0caa1b297328", "1-1-5": "0b9b274c2137dee430744dfd0c91b4c22401179379af00fb0b85ff00e1de93ca", "1-1-6": "35441b96911936376004b5c45e3c74e309463c6fd66de725acec25803d5539d4", "1-1-7": "2b1af79ea2a3e29da098f066bf0d3503963891aacecd2edd9de8bfc4139a87f1", "1-1-8": "2c6761c3dc789dbd75faead8dfb5b45366163c289c7e705e02de33395a5349bd", "1-1-9": "e44f9315d1f66db95b8b9551fce5d9a5c946b3fa6fed178ab5828586f9cc7877", "1-1-10": "4140e46240f622967b6f9e5ecc6b5161b1e0921e461b5bb7e317f6fa86ce15fc", "1-1-11": "9ebba5d4a4c1a0471ae72e4cc9eff4e41fdcb49880f20ebe4cfe82936d34d9d3", "1-1-12": "61a04032af0cfa107216e75dc781e0113c124a26ceffd1253270bf7b46ca750b", "1-1-13": "b2d42d66851cd6097ce5975d16b1f93f548c47a4d1fd690185bc837b3f4db382", "1-1-14": "e5366b90e404301276a39e59485dabb77b10dacb01c0ad9c338934720c9899ba", "1-1-15": "cfdc2ae85913e86f84d9f6ffd94390b5ab5b52cf4e848c85857c5babfa18b767", "1-1-16": "6e9b79a95efbcc828e0129fb334b6ba829041aa68fc271d7ef7a423d9ca73ecf", "1-1-17": "af95848486d7ab41856feecdf2f5a60963bf7d5b685535c22e7731fd2e2a5759", "1-1-18": "8eff28e74be0fd40bfc4f8e7d82121db2f1a5dda69d554a27c4080b775d23d6c", "1-1-19": "07cb540a1954d300e649246fbd3bce6aaad1dfda7a9aa93bad11de55b8fd9eda", "1-1-20": "0b5b248389908b1147cc63fdb7b17b901165d214a480f6664322e1ae9f9d7754", "1-1-21": "e8afd606a4d6150447319b71a3e1806de82a1ec52ae7765f4a9d575ef282df56", "1-1-22": "bf8d2a02f5072b3e1cefebfcc5fd12b2a9a486c10a2d2a437bbea3c6e9299312", "1-1-23": "8c9a9e0438979260123129b9039b4889f4fd21e40cbb5df1ee854306a727f272", "1-1-24": "fb58b04164f6a461a3d5de5ee0aeef3c179d05ec62e56fe39a17abd7d149f1af", "1-1-25": "f6a894677a9794901b549f27715fdcaa5a34b868bc59e06d74549d30b384cd24", "1-1-26": "9650915e2fb19d30b8d81c93e087ff443e6c174c0ebbd7f81a0d835c9392499e", "1-1-27": "3f4108eefffee4d4d3f44eda700751f2dbe2205b1ce7b15938f6bdfb78d6ddb0", "1-1-28": "adb6ce85d5ce320adfe4867f5368c177386cb9d4dd5ef165e4dad5990c6f9421", "1-1-29": "09cf1977ca2c625115e9baadc2d44bf9e4da8f0c517ec1fec5152031d9b29aa7", "1-1-30": "0950be6a92204b77e0c5a84a02b69b5a78958e36ab4331463ab4102065dfa5a8", "1-1-31": "a996bcaca5d7a23f91058ef2f6a3fd1fe1de33abc13886608a48400b7db9bce7", "1-1-32": "fbbcdbc100ecbdffaacc8e25f6bdeb0c882167386d28ae4e5db39fd77eb409b2", "1-2-1": "e42bb1bc48512345d8888f2bb49177e47e5479ea47a6938e7bf0296de2cf1445", "1-2-2": "60bc96c71a642dcd20d64741d6b33b3be852b34e62dc10752f958b15f6e113ba", "1-2-3": "b19f97f04af6dc2869ccc8d754f58174063cf403568edae6be5cf80658856916", "1-2-4": "89e7ca06d477f427f4cee629fb84df6083f5929384e6e7f5c5d1cb5996708ef4", "1-2-5": "eb9101624c8b1d3537e76526a1b1be4c581f56d6d014e1f93107a14f9334df56", "1-2-6": "46640373db30de1a7d5de09f91a6876d70d22e9cb30fdc99c4fb3a173d58f10a", "1-2-7": "eaf4f97070fbce34275a25f67dc3d7dd40c1ca1e52f49d44929fd8be7257f205", "1-2-8": "792a549e4639ceabef4e4a14397abc271e23ec1efcab751977067547b2958393", "1-2-9": "67e5213e5164452119af781191e87909e4f7d1a4ba3d6c112c3a62655402ec4a", "1-2-10": "9886ed02cdad4f35274ebf982435e1806a2138e548de7b05b473ea4c31703a8f", "1-2-11": "40af0d054cf03670675030baf22014d57ccdf436c6a41d638a9fa571073e3ec0", "1-2-12": "d5f7d58c4d8f264f5cb676c66169bc6a7abdc9ae5ae00870a4a2ad876c62b4b7", "1-2-13": "4193cffd15cce6a86fd504ea101c8a0fa3e39dcec75180e9975e5f210eb26773", "1-2-14": "cfc7e33e73ee2e321af9bd403ae3c49793d54e41cbd8a2413155f3eb71075c39", "1-2-15": "30a21d2454dd8928b9ac2d5939b609a676420b743479dcc42f303c9d4572f1a1", "1-2-16": "ca800af14216f8bf4cdc3193ef92d0d2bbb4f27cdac2a9878396fbfdcd511803", "1-2-17": "94aed9328c1d7597aa3a1c64972f491acf2e3516f16fd872970499279a1d3e51", "1-2-18": "d9cb35637ea39417570e3d7ad545ed9aadcaeadcac35cffed58d4aaa30af2cfd", "1-2-19": "1108eaa427e9af76e8651143ca06a06d9bc8cbb30bb61d19169fb8fdd1e94337", "1-2-20": "b8eac1ff10113995f23e88f280d06e845464ede13db02a2c79b67f7a1f6fb3d9", "1-2-21": "f33592ffd9180de780ce079aad8e4bd02db56bab5060047795dbe83e40804561", "1-2-22": "68bdf323258ed21f6721ab216e81ea306f33dc5bb81d11a7cdab3aa1bbdfcabd", "1-2-23": "f35db475f819c694a896238690c5e7b0e9affe8839b90bc08eaafb0f529614c6", "1-2-24": "211182016c5a6d9d8ba9444538e0d58bf99ab46a4fb3e59baf4d04999901f883", "1-2-25": "6296c6f60f9edaf1a44835890500eb12bd93b7f9f45a85f7165f5785845288e6", "1-2-26": "3e88fe155c3c2457a60f3157013f213153cecc855eb8acdd9ff0dc67fb7687b0", "1-2-27": "aec1555618c24028f3535b6900852eee3a99b18a43e3989138176d07c328fa0c", "1-2-28": "241009b4babb522b41a54224f661b9492d3bb185a515011d8e38a0f64d70e90a", "1-2-29": "4abce09384a6892671aad56a6a5e186bdebe1cfac8c52eafd2ca1f4a3c02a88c", "1-2-30": "6eb2a2bfd11407b3b2c18a98e8268d68df50e5404c0fa61d75f3966a3128cf9a", "1-2-31": "7e394df5e6439f2b5464583d104f3210c4caa4e9e2de46760645f88c8b072b13", "1-2-32": "0156ca9d61933acb4d3ef13a713f7cf22157ade4b28c1b32699fa1f89e287c13", "1-3-2": "7dd6e0c210c4fc59028be52a0eb9a5648c3e162979e6514f7ccd5a911a82da2e", "1-3-3": "22aae9c74cbe507af2d0b097c11b0444708df52adbca985cdbe2d7f7d7b67a4c", "1-3-4": "f686587eb463b4039855bdf013b5dd42016b90ea7734778c4403a4075cca14e4", "1-3-5": "161b521582a3d56cc274fc1b2538d763ee6209f3d2c674291f85e5e4ba500c8b", "1-3-6": "a50a714ec346852546790f000e55a76c5ae31fb0913e55b43a0299048669a154", "1-3-7": "18a99b9d75cb2d44817efcd0addeb31eb1bdc57888f9828619f6ddf50dfbca5a", "1-3-8": "d9de7f6a87bd2be74d92931c912f1810bffa0266ae6140215bb66d1db17f924e", "1-3-9": "02f6b318acc6dbb762c3a473f5b8c3265b1c288692803e0b246b79ce5cc7a9b1", "1-3-10": "6fca8b3b7f52394b640c8e5ab584cf25728078c56d863b30a7d4b06baabd85b2", "1-3-11": "a19753490cd50496da8f489898bb1493d2ae4ca30597661f2da8aed8443a9f1f", "1-3-12": "1e876e069dc7e5c3fce7cbbaec596822ef9aabaea7ce7bc04db28bebed9bc22a", "1-3-13": "b81fe41b024c926e43991d642990e588af5df92af712f17659b707cfaaaf3353", "1-3-14": "8b9d7bc6064fffc313248a5faacc8eed3191ee9b9344f9bff29c34ea45207f9b", "1-3-15": "a50a56d0a509e56d092dc1f3ffafe5800467552e59420c7f54818d9d1019d1ac", "1-3-16": "6d4a87c8b472b5a808172a2aa488d98c328a76ff92ae04f5dc244926e4265e07", "1-3-17": "a2eba4eba81461811007db94617edb880e47b34be5cc403fc62b476ae3828e45", "1-3-18": "188bce1fa5be353cb6754325796c111093c81c806ea88fae47b3808b05d032b5", "1-3-19": "e5f2d6ab0dc544ef65b98a527e89d0e469144a1b4267cb2b8ab19f8041f098b9", "1-3-20": "482b64037eaa155f46fde50f6891f20f25a0e3e2840dc45c55c571b4c425e509", "1-3-21": "619cf5c2cd9223769f73d8d5174b41dc4aa6cf53fbe4c535e07f175ffcd8d0a7", "1-3-22": "15b223c05698e3b18ddd4d1a33e3c5a4653c6f75792249041a7225e5abcac62f", "1-3-23": "b0e224f8c3fab179fb751f74cc1e87f090e0f9ff1ae7d7916222d8337845f20b", "1-3-24": "b7a1331e2c3bfb67a4d078a4d8ab36914bdeeb251076a543db0aaaa65bea8cc2", "1-3-25": "01180d7092f4201d168f39892948025f94909f17fe646d9536a3221c48e271bf", "1-3-26": "d482e97ef072d7c6adc0aded560eedd87e72ca62c74972c0f0586d31889a518f", "1-3-27": "c2b5a1a8c3d4111c6db021394b560f5aa99c20967ad2b896b7dadddc1b729186", "1-3-28": "f191060e38081cc45c0d6829c857a8ce589d58049d816c232d82c7d2d6029aad", "1-3-29": "0f19c86ba0151451659aac845db5acbde8e5ac62f8f516de425b5b8cc67bd5a5", "1-3-30": "a85219e575559464f5eac147b31ba4f9a78fb8e75ff843d454a03979c873a69a", "1-3-31": "ffb3b4becff2e358f4a200b313c5f0f1c18dcf3eb0b0a142943d9e430bc80e2c", "1-3-32": "cfd0014f384d954159017db3efd276ee4f0607c497fdb0b7bf9663887cafc8a7", "1-4-1": "89831ebddab75298f88da31ed120f5e18d047bc997bcb6ee212187be1cdfaccf", "1-4-2": "038d0d065df0dd76d6d57da1eb0d9171c8961174697dc9ced3650bc48b7d9a1c", "1-4-3": "63273e0ee8288b05623c20045669a083a7257f7da5135a7cd5ea802c19833305", "1-4-4": "bbcc01460a1bef2f186cfda07cac9bbd20b5475bc2888d8be579d789a4b1a773", "1-4-5": "6ac9cbb51f8c4a83f2378f8c8cf1882a17b69bbff2d61d4ebeb4e36fa285d42a", "1-4-7": "b4f875d3e3abdcd30830b6bdc18f3e70b0ad1af62bc5dc2d2029d1db7977bbcc", "1-4-8": "15825720bb71350a941af9dfb4cf425adc6f340723069f044a2a7935dda37272", "1-4-9": "a0a8a5cd271bf724455b83442201b13d71261b96856f4119bf3a9130a94381a2", "1-4-10": "24d4888c37e5792ac704ece5eee2b58cc76fe738026a4051c8b0e22a237a089b", "1-4-11": "a0999f73e9136e278393eb36fe82376aeb0bd983bdb4f5fb89f6219dea027052", "1-4-12": "220c5e67152c2dbef37456dbaffd1ed7c4a5b4ef4b1babcbea1e2b4182b13487", "1-4-14": "9dfdd3461be2e4ead008e1cb26309293eda6713c72214833e7a78ca6e40fa4fe", "1-4-15": "c4ed8efbf82360d00b33cca08e7e9833c71b1bc977d940221a06accfc2880d3f", "1-4-17": "2db150c5b400cea04601715d5acab6244391a85a522fd1e9de1d865d9155da2f", "1-4-18": "833d6d3055cafc41c303de32aa917ee7e88d386256f0bc740acec702ddb37620", "1-4-19": "46970500202cf8d43632da29848ab444fb48c788484274b7e150d8ba400f315a", "1-4-20": "5ca41b49aa15a151c61ddfb3814067c2079c39b40d325a647770cde3e3620534", "1-4-21": "03f5eb6fe9e7f743d1bf8af3ba015b0d7953ef16d8f1fb7837a39a899f998969", "1-4-22": "e7fa641609a67230b9f50be5a8d65ee05001f045cf25b01053a0795d40557368", "1-4-23": "8d791a1ad55a1bfaae4ffaea5d0def47998734b85c4df0aacfddd6576a1467d6", "1-4-24": "f5d4336d71445ce7930e41b60c94b6c59c66cfdac04768166bae02fe0f63245c", "1-4-25": "7991d2c65be95fb0695b76398360d309f1e67280e3090183e5758c1be04859cd", "1-4-26": "bc41277a22fdb01a29d698d35809286de4a05cf8575cd17259d514e247a8ec13", "1-4-27": "10e65ba9a4635bcdf44a43266366cfea3c12eab4f1e67b206236c5217cda2676", "1-4-28": "e497b021ad0cdb6c5695089e542f07b47b782af579e6b6e65cddd6ee9cf97370", "1-4-29": "0047f0c0e2ef4aaba452e27843609d91feced910c6df8c7563e0796c21769894", "1-4-30": "08980a8061ec2aef5094ea68181de777c880434bc364d7012469c7a1fc223ceb", "1-4-31": "2d6243bfd390249aecfcf7307c30fc5d1f25426965eb1a69030c5b790cce2151", "1-4-32": "a03e3126ceb112444e0f6b48e0f016106c025cad0f48c10f55f3173699aae22c", "1-4-33": "73e5f3672bbbc7cdab65855f58ef34bdba36611030bf8fa00816bf9068dc39f5", "1-5-1": "e7a88c7dcfc71cfb54025cc75978f1ef577794e9b0801f99c8ef5c870e07d668", "1-5-2": "21f2281f065a6f1c5e8d8fb137b602485f9ac4f26cbb9b40428998931df0b09e", "1-5-3": "d216c919f49df78af44230f05cbbd245af5af4e0cfe99eba375867744a5ec58b", "1-5-4": "5c74177d69e2e8f89e5a5d8031b307dd1abe0802e6479c303a5ed1e2dbab47fd", "1-5-5": "cf85511e569cc7043db467814bfa77d529e91b19a280e2e4b5992e8c82b8d988", "1-5-6": "26f9eedcca639a9175c474ab0ce0c3f18a6d3e1ea94b4d19e1fac4fdd89c365a", "1-5-7": "69c341a77dc811836fd3ba8917c12c9af3691c70df1f210be04df99b9438074c", "1-5-8": "406067c2ae904f53a640a45217d557d582d18e968ad3e4d767ad5cf7fbe3aa0d", "1-5-9": "ecd084efb040e2f7267d52792a62e61774545f8aa4be1ab7f1c8ed879af41c1d", "1-5-10": "b3566222b096d9fd28b676f002f11e9a7f2f08b6aed44a4c2ba35ff37c4166f4", "1-5-11": "945903246eb6793228db144bb8caf61831e4772da97ae5ff75e4742ddb3aa6d2", "1-5-12": "7a414462486572eae526b0b634f6b35b2b907344ce61b78d3cc83bed3a1f4b76", "1-5-13": "a5b981dcbfcadcc9d96c65b4670bd579fd922fcce72cda71370e005992fe6e08", "1-5-14": "fd7ed3c52ef005cca23d3c1ce911be8370296f3fb62fc221716b24d03ed110c6", "1-5-15": "746a46b313f8435a7fbee678eec6fe9465f641dae2fc0d39ed8a4ece990ba419", "1-5-16": "b5ad98b70d001f95d0fcbdb5bb90e0e86957cdfc763359432bd08fbed95b5c67", "1-5-17": "fc1285492ae31d3c580e40b920d1476265222c8f96f4e7cb89e418c24479587c", "1-5-18": "08d0e72519f94806c4f842e2af80fe971203502b776573f86ebccda23f86447b", "1-5-19": "d708c696233128b28872b5a16aa9b89f254a4a6f877f7c53357cbc60bceeb95d", "1-5-20": "db5b5b294201be9cb71293e2bee34b7ecb93473b6cc2497779fd490884b44ba5", "1-5-21": "7f3ccab810d268d0f509df1f0a1e37c8b0fd0315328298fc4e77789e30630a8c", "1-5-22": "c0324df91d93fa5a57a4a05fee2d21fca6e13bc477c3a31520efb4c1eb5698c7", "1-5-23": "c253739b144c924ec4444d5309d76a2c313dac46a6e19a5c08a2261711c4419b", "1-5-24": "5bc01319da7cf0ac87e6e6d4b9cf4898e0efb7821eff1b40466b805cf085fd3a", "1-5-25": "7fdf94a23254765afd50c4cc9a1a71ecc888c3979a0f5920f793ab6b293ddb13", "1-5-26": "7ae10c86ce67de766fbb0c641cd65bbe3a80e9b510b99b2181732e445fd5081b", "1-5-27": "a2905aefaf218a5a3bdd09fffa07ca5aae68f134258b7264efbf0a0e67b95eb9", "1-5-28": "4d4ed237a51379ea64f89f1b7fc1b6e7244f0a7665856e3dd6e587160b17c57e", "1-5-29": "d6964c704f78a11239689310a7492871a7945c414dc398da17924d2061d33804", "1-5-30": "16199ec877e24c95d04c051feba6a15f543551013c9413224ccd322348b9dc95", "1-5-31": "2eca3d989714d864f6a25105d5780c86b4b111a10ffb192e7e3178be3e4669e7", "1-5-32": "b1ff35864e35cd6e9993d3dedebd85c6383c7ffe718e1bd9ddca74797566ef57", "1-6-1": "8ae7cf75755b6258edfe54c4cd3c808a0118049eddb1ad5b3f868a81b7f49ff5", "1-6-2": "59c26683299d90181be075fa539b07009dc67c093fe78d7743efdea5b6e18ceb", "1-6-3": "d8e466bf58c6e21274812bdafa110f5d7c7f006f36dc786403c051280bf2a113", "1-6-4": "1adf8dad95f49249ff7adedacf562b1d6f8bb9825936d4f57a31a647a8ae23d5", "1-6-5": "5a77ebdb333214f9546ec3a3dae3bea0a9e43d2b892b28cebd626ab0290bf312", "1-6-6": "d560c0d4282dba6634d5fe0d2f301240acc3cfb50735dddb8605c7792714bc48", "1-6-7": "6696a9a7344295cc1b2a29b2f899a0c676ac5300c5fc09ef6cd212dc39e55c16", "1-6-8": "f12806878f44dcb9b9fafcbad981312e69deebe65f61391af8a08ae8d54eedfd", "1-6-9": "4dac3f18ff6a81f08f4d142bf875024cdd56f0b5fe50e9dfe36b98d0a522a0cd", "1-6-10": "56556318c166fca76726f0a3f26fb3592a9bdc276af31bdfb4e5da5d0f5d53c3", "1-6-11": "59b95b94e5d1af391871f921b174baedafe3e572908abfe7ce8a68c32004ca28", "1-6-12": "f702fefde12f685bc2feea501360f29fa54c22cc3309222e5b4d2b793bc795ba", "1-6-13": "8a347c5de5e1744e6ebdad3c76f3b6d9ae4e8533b4d2f91f8d237248f480ee81", "1-6-15": "98d36ba5873c78be2bd954fb5550c390d18cb930e7c134f476cfd0a2057e4a38", "1-6-16": "efa52fc8b33afc4877242ce06b13c1da01667fc611818703c2f8489ba565abb1", "1-6-17": "08f11c6499f9831320347b16f8798844a0a855d8dce234869b6de0beb49eacab", "1-6-18": "2fd16fb5f1bbe6143ba91643062cc384fa811e5a3b53d7c51ad7fcfc71cfe846", "1-6-19": "b3accc56bf091c93d5a308ae2f8b26604c81db8a7f51adf6aa6bf88902a256b3", "1-6-20": "303706195b52119c7fdd69d75e2f764353d06f5d3f143b866ecc9d8949fd2e06", "1-6-21": "0b5d4d74014c45b85cf47b4205b6eb932913cb2e7f005eeae2eff146a115a12a", "1-6-22": "b3eb7981c813d2291685c6638254e7daedc4d149ac585ee2687771468f8b66df", "1-6-23": "c0fae5e1b353709473a94f4232a1564e1498d0678ec01cb829afd89172211275", "1-6-24": "92bbe541c06566a6d434ff489174313f978260b16edd66721e222544487525e9", "1-6-25": "f208de7b8141192ccb53eadeeeb00ad1f5d7d48e2629796310768cf7e3ae1c7e", "1-6-26": "4fd6517bf75747a4cb328da913bdd08e58742c54dc933cfd526b870eafd0ec96", "1-6-27": "032e4f01cb149cf6711114c71df7f31f3eb279dc182c46b99a138c8ab599c501", "1-6-28": "91f53c3e6d2557b085305395dafcc241f5b96a760a6e11a1e6129522fe272687", "1-6-29": "30a15854902e62e3b7fa1fe4c25c620d07e248b2ef0c1aed4dce2cf255873306", "1-6-30": "67a67d706bc568fd8de9296e39f6cdc25f09d753989db4899166194fc4b469b2", "1-6-31": "c9af217705917276d1d3ef9a3489a0e09acc13e1ce2e673e533118ec64827539", "1-6-32": "4d2342f2b828df8504c1978c8514e4687f5a82ca381fa440a993ef374ca0413c", "1-7-1": "71d64ea78eef0a03af18ad9862a72d848f600bc2e3f54abf0f9266e386a025ec", "1-7-2": "265332967c7824d78ea5ece2d521310a0e8e78927f95d949e5e0164ea1f02dce", "1-7-3": "0961bf27c28f395c74429a0930f0fdb874f5a36ac7e19ede7f9dcb2044152928", "1-7-4": "8c2ed879886826e579bfbf2a6c33cc184cad95793ef08ba989aed46237e7625e", "1-7-5": "151ff5ce297335a94a73d896675e5c6bfc4489949a875aa9adc8a828edbab35f", "1-7-6": "5ec971a84cd04c128dce6815e2d45c52c7add8c76855673e7592810882d5c822", "1-7-7": "87cfc73e4683398a03359470c68ebe1745b9da6b91de1c55af0f1fcf039e06d4", "1-7-8": "c6d92e3b561eb1d62f2b6014865a76666b47022770768a6f39ac0b2cb1e59066", "1-7-9": "27b677f992490d9d289ecba60ddcf32378b14ba1b83df16eaba17772b1ee13a4", "1-7-11": "9780d42bb330926582c4e2f23485eac790ce8ca944d9a71eb3b43db0dd027931", "1-7-12": "ebfb578ede2771a57853adabda45605c112662b3a8d11e82798534b6cdb2a6e6", "1-7-13": "c2f0f049de94e6ed6f0aca6d472cf43c8c06f97d9e780dfe4e26bc2d42cee62e", "1-7-14": "6bc28f22668610027a3f0f81d92880958879f9b2663a64e722715bb328707807", "1-7-15": "cecec4585e2e35a033a073d702ea5d8db899f976ce178bd18ef02a7aae0610af", "1-7-16": "aa4f4ce95c7635986eb829d3ae09b9bba267f8a0745c0faecb1ff361b4453c1b", "1-7-17": "9b303e6e22a27a28d10bc9fd0d0f5f5a1d71d484fbd8d0af4a770eae1421c07f", "1-7-18": "e2e904ae260c49fcb096f43493ddde5e2f48d1c09f3a7a0195fef90728867287", "1-7-19": "7e53c91530f8514bf150ffa092683d1c6d28f7a0d5130cc22c2ef1d855623652", "1-7-20": "84df077bb6f637a31bd80b846e92ec97fc76e73cfc115e1b73448c6f5b57c69d", "1-7-21": "bd2c6f0a3039d6811d2863499b58af40e8a55a673aae70a4eed2d9664f4f6b64", "1-7-22": "5a7ce9393d8fd5b90dfc92f529984f105824545d2b5150d06fb8da427b2a0da4", "1-7-23": "a63de473b50cf6aae0d41599f0a0f436b7fe8ca918862a004dd0571e049b2457", "1-7-24": "53bb988dca8be985b4565f1e16fd27efaf647de031313428154db3facbea6465", "1-7-25": "437ac9ce7f2225134ac017ab576141bcdbdfc7e4e83f23fb8dcb65c7ff070a6a", "1-7-26": "51658c3a0cb103fcb4fb75987df36849aaf15469857e0036698b0a9888d25d1d", "1-7-27": "0fe04013efbe6399dbe19d38200513865db50ce61a60de16ff892644eae99b99", "1-7-28": "68af207a4a78ba8a60c0e9ccc441135ab5ea1e4ecf01ae8c7af738c6710811bb", "1-7-29": "7d2e8b7fda5bd4c711052281d452de17389852c8abe22d98c7799421a19056f5", "1-7-30": "28a7e3bebe1079266c0fdbcb90b2aee0893ff920758e3116a20ea2533a015ef2", "1-7-31": "2912b31716585b2c44e879ea6b92041a8bdb80e55d8911b070783c1d862ee2d1", "1-7-32": "fa4b8bfe24413b9f264925fb1f1b2f48ed35254fbe6fbe06b6f37f3a692a7048", "1-7-33": "c9aafb9d3d8ea658edded530cfeb10bbc66ff2aa47825c6451d9fa6a9051ebf7", "1-8-2": "ccfb23eb19902668e0d8215e5b016fdb73f507ef673cd47896a1cd1e9e0b6bed", "1-8-3": "6c840156f902ecd2b8f18ded167fd94a5565347d524c37d1e0895af16599430e", "1-8-4": "33243f151e6848c0a4b83266d906786ca38575ea8c53c958c607cb7b8afc7822", "1-8-5": "5b8f98ecaf8af3000b623cb83d60848bdc8a9e63464edb0ea132c4b10765f86d", "1-8-6": "e8974bf755c158691233780f74e826111e3b7c64d15738719c832c382524036c", "1-8-7": "42323dae15c09f020099c9f6032e4e8ad4cbd9ba69c8e2e7bd5155033d8b15eb", "1-8-8": "ae6fe025fe63521876bd75ad03062c60bbad7156afc26e344bc32fb12a0a480c", "1-8-9": "28c7bdd7c151ddd74e7597a3eb68823e9ee9adc212c5546aeea276fd80cf50f2", "1-8-10": "3240598c07a621665b97c143529fd972ef5acd6d63c22277826f178f541edfad", "1-8-12": "f0206d19fb849456c0335303e49583fcf2d48795b48c20eb4c3175b4e6c1e8fa", "1-8-13": "0192fbae8aef3b6af93003893a270fba973b430bbb442a79118a81f9e4fc24b4", "1-8-14": "4b49b17a27b4b81d982b45f2cd1e0e233d22dfd0aa27f3ca7da77e5dba0341f0", "1-8-15": "bb9f86db8339a242f103e45663433393eb49e4a05344abc71f52c845b933ffb9", "1-8-16": "a1f6207a8e98c2741a914b86a0477b80b624c5b81bd28ea135f3322735d129f6", "1-8-17": "8522990cee563d2c381a7b2ef2715d4c1f7234370d498e7635d589a9cb07f6a1", "1-8-18": "9e78fc5fbe8d42e3a5580a89694fc027b42d7db22b91298ec8968c225bacbd9b", "1-8-19": "b76e88611cc7b85c99ff4d465de7277925e02b51b9b1fb828392ffe7181998f4", "1-8-20": "d0b3ec6fe3691ff671e7c1f36dd0bb6475af4d45192acfccc32e6f4f13c57843", "1-8-21": "ad4e3de344fbdf3bd3b38ed4c7a3fed04f019b61a9d7cef0d81220e251572c0a", "1-8-22": "44c03ab77831661783c81dafe9440ce46dca6de299e300769a1072008ccbf7e1", "1-8-23": "ec800e9af351660f24fbf0511342aabb2f95117fd59647767c6a0b17ba82cf91", "1-8-24": "076a63523555b7feb0b4f09c23a5a90518d646835c3ffcd496cf3e95b8717786", "1-8-25": "e072b8f9f72cf84a43d8b38af8c1b309dd66d37809231892291132dc952c2282", "1-8-26": "74a85c5377eb741eb467bec62b5cb0c038f90812c290e6fb42fec5eea2b647b5", "1-8-27": "5420920f0eafac590b5d73939a8eebe24ca8f0b964e111baf75d74bd0148c83b", "1-8-28": "ae2261caa93b2c97b72eff53eda6565c6da82521a5fe944bd1ef70a36c725eeb", "1-8-29": "552cae2fc92353c72944ee5d0877f023e32ba4df4f51f874227ed7f7196717f0", "1-8-30": "d4d400d1714f7219447e8edff0dafed6ca44963a196f6e7b897e809f3ce6f26d", "1-8-31": "6faafa2a2c498da0a6ef684869b56ce6a79acfdf6b248298b6d004a08db8a05e", "1-8-32": "4c0632178f2fad676eaa629f072de67e1bdd55bf7306aea09b1940f040168232", "1-8-33": "a40a86571d51f77191ef196e02ad26dbd22b359ee75005f8d39c0b369efd6c9f", "1-9-1": "8bf69c69329efe4a87e475b31b44519e72c7862b5d6038410642279dbe765ad0", "1-9-2": "32196d2eed054f3812825214af67ae4b9a42c272583d8afb7055b28df60cac9e", "1-9-3": "0e17ea8e5d047e42360772abd514a7e855ff188c8a6233787a02ca847f06a53b", "1-9-4": "fbe6db21bd61b023512e0e84fec874f0facaf3994b026f633a00fc662b84db30", "1-9-5": "077cc607149256f58ed600f959961834cf366abeb100ae878f64b8120670a069", "1-9-6": "7182839749f84e4b49eac2a6663f6fda2cd08eee5f871f84b48cc665b214cc24", "1-9-7": "f619b42d4174e3300d06b65517c2fd8129bbce24daf8b4f7c0f0168cef89d38a", "1-9-8": "2e9ef3aefdcf5c480831a0426bb1e3a7c6ff3aa4da84f14b3b3a40b4b81a1ead", "1-9-9": "c115f2bc321f5d327b17c5d2a18e1193516a6a972a6988821616b4b2c41937dd", "1-9-10": "d4e22ff7c7f3dd608d86e56ab64331532ab5b83a7f2af6c6dfbf904e523e77b3", "1-9-11": "2ad1399ccae047ae6b3312e879f1471a38b5b0893136f87afb9376ccbfa65e53", "1-9-12": "c72e5d07e9f4528ef1923bdecfff5d44dc02d7927b23d1be0a908ee542b3d526", "1-9-13": "89391be5c1a9114738c8dfa9876179f0baddbbafa6158e7158b6bae552c3568c", "1-9-14": "2fbefa9b98d077aa9a9f56ead24bcae549560d8e7f075bf94363d17c5104e14d", "1-9-15": "5f59ddfeb9ba43925596c269c226d446543e0958214b986acee7e256cc832313", "1-9-16": "ccfa5ac38bbbe2402966cbc49f83b4c255084c54f9ae277d1a17468d1b666de5", "1-9-17": "ce20a976dfcf93f858af01b333426c3e98db0c5c82c1d064e9e02fea16b38a4a", "1-9-18": "d36270ff7416138ec81ac07b52d7fcbb321012023d36945f8442617b884e49d3", "1-9-19": "cd5988d2206762dc92c09abc4db738db1d789ef5fea56c2ee654f5e3aaab4fa8", "1-9-20": "7494dfe5f52ce4643efcfc11517f3975a7db5690ca68f6c73db903ae44b5bd21", "1-9-21": "4745474b5b6a6927a54c8fd6d98fe5ef1a2e3584f31818016c298583a8726a81", "1-9-22": "cf878a48daed4f9307cc515ad44dbc88c54ebdd5d7bc56e6f2c94cff1c06b3c8", "1-9-23": "72c0f2d03719682bdcdecd558d6d90043afdca703b60d5db7faa630a40dcfbf8", "1-9-24": "56bba5aed51c0d40499353803258a0e40ef93777cb8cbba19a3acb049c2eedb4", "1-9-25": "0891bf3789abf690e8d95b7446cd5333951bbcafb7842ef5ec863e155041ca85", "1-9-26": "ba45acfc3872135af7c63a7d3d58884334478b9178228e0ca40471ab38c53017", "1-9-27": "f8706b21da55cf63e322f905446390a0d9e54fbc27d0bdb70e15246d2171e63b", "1-9-28": "dac1ebc56d7f694b45b4f5fca22827314760017c774c34c34bf7b61b4f710936", "1-9-29": "1f24c760cc497844c79044e076cb22a0d780b1f9f490d91f6a781bb68ce1d264", "1-9-30": "1540aef4a6b92feece60d0c53d2e3e168d6266e5c2b8e6fdbad712443ebd144d", "1-9-31": "a181d5f4f7b03534652debf3f87e75dc5d5857c0c15095607951b5cb852eb8e1", "1-9-32": "8b35a3933aae34a4ddaf59c0ede3633ad1cdbfe8220695b474aef446ed42f106", "1-10-1": "36ce9340fcd07356444add9d79e21916b12d38cff6c8b5040d8834c04b4f7dae", "1-10-2": "e671d95323dd601ef0e7e626195ac49c27fc4d09c12296b43f053c4c0c4b1d40", "1-10-3": "27508344c6c5ff07e2fd1226abdae7733e1861fe14636c65aade2e3bd896bdba", "1-10-4": "c126e590e3955aa8576a843bbf3c560bfec0065b21ffbfe6b1bdd63901167c38", "1-10-5": "5e6ba5733ffbf47c12f965e5c0f088214bbbc74e739dc9d1c9d9f7ea0fbc7a80", "1-10-6": "d4d05a5d0c082358d083d97b60b8ac99802d33db4deeb07da66d134b2b2ba358", "1-10-7": "723f8e5d5e1348526f4a24548e40bd2b64ad89d2cadf8e83d5ed329d9fdca41e", "1-10-8": "95cda2ec7b17d9ab91188880889719e73979131c46025e2bb37f8d34cf52438e", "1-10-9": "4f036dda6793169f93cf48c141ada4e87bdbdb3c0ee337e4985f8cc6916fe779", "1-10-10": "ff89bb6e08658a37124ec2af380d505d17beca26694af380ac4a5dbaccb51c05", "1-10-11": "ed4dd43acaea387a8fef13c02b225d8a36eea9fe94decd234812cefc4306db51", "1-10-12": "333b7e212d203181f11f62fe2dea1bd0913721ec35cd40bc6a9685b29a0bad53", "1-10-13": "f09aa22e828b8df85b4e5f6a124da88999d10a42be1485877117a55f52daffa3", "1-10-14": "c60a7240497ead8dd2c5011b51673596887bd07fc4d130dd9d8df34af0b9894c", "1-10-15": "b4e3d129db40050e6f087accb02f73db54c7781f08597ae2cac370356c053977", "1-10-16": "1501dcfdf7f99a72040a8236782f2013307ee23edae1c501688907133ec563d4", "1-10-17": "87d91d097386bf860b7412562bbe3ec69f182144b6b1ad42beb05343c17a8db1", "1-10-18": "46b68e1f17dcd012533e13ca16cf47bdb929b6f64bf62dff591541b341203309", "1-10-19": "d38e452a0ee5fd78ad01f0ef1dd7518a03e8275c2abf02f57a1cdb64c19fbada", "1-10-20": "48877bed671c1814487ad9ab4b4e281916da5fb8dc4b8bcc0dfedba8b8f29bdb", "1-10-21": "5177572a8a8dd29f6bfdd77b369f878a19f9a1f348911d1cc3411b190d28ecf9", "1-10-22": "f8faf8c51c1ef0b9d4edee0f21cdd825a8eb505ed05e0333e90b5ad452a6de7d", "1-10-23": "2ceaa1ea8ca422139f3b918dbeb05312c4ad6b1ea00f3c4856daa948f2751331", "1-10-24": "addbc48895dcf3b758bbd91b26e09174bc87ef8b5d7dd3bbd9837e32a56d29fe", "1-10-25": "4fab0c0c4f6adda1b5fc8c347b665fe540ad0a9f00d3587e20827f5a274a4ea1", "1-10-26": "deaf533074774ca6e2469594ffbedf3b7a4c45b03f6bc40cced99313ff8415d2", "1-10-27": "72b0773e5bd8fa958162b352115a1cb763cc1466fcff3fa78efb0e8f05dccf6c", "1-10-28": "7cbf49731fb92df212a79077ff7dac3429372211ee0b32a5f4607d28a3bd89f8", "1-10-29": "471cc15501594c72bf168d3189a9101f81ca9cfc51f277bf346f261ed27557fc", "1-10-30": "5320504ea36c566d9b8e1da27b1176dab18aeafdca79b634d3cab996bd1c175b", "1-10-31": "cffa8351bef15526f99fd8cc933f6416aaea236a60a2e5186dc0f889329995cc"};
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrjfOlaNHwA9-pKCI1zUvP4NyRkb4vBIRV7s3Fsn8Hk4aIe3qXWTS5enpLJiGfIo6j/exec';
+const PRACTICE_MODE = false;
+const OPEN  = new Date('2026-01-01T00:00:00+09:00'); // ★연습용
+const CLOSE = new Date('2026-12-31T23:59:59+09:00'); // ★연습용
+const GATE_CODE = '17869';
+const GK = 'g1_gate_ok';
+const EA_KEY='g1_ea', EB_KEY='g1_eb', EC_KEY='g1_ec', ED_KEY='g1_ed';
+const REG_PRE='g1_reg_';
+
+const INTEGRATED_IDS = [1,2,3,4,5,6,7];
+
+const A_PROGS = [
+  {id:1,name:'한국사 문화 콘텐츠 제작 프로젝트',teacher:'김소영, 황성엽',type:'통합',max:33,desc:'한국사의 중요한 인물·사건·문화유산을 탐구하고 SNS·영상·굿즈 등 문화 콘텐츠 제작'},
+  {id:2,name:'화성 이주 프로젝트',teacher:'김시연, 문경영',type:'통합',max:33,desc:'누가 화성에 떠나야 할지 탐구하는 영어 역할극·사회 법 만들기 활동'},
+  {id:3,name:'픽토그램을 활용한 디지털 시민문화 조성 프로젝트',teacher:'강경극, 신덕희',type:'통합',max:33,desc:'공학 도구로 픽토그램 제작, 디지털 시민문화 주제 카드뉴스·포스터·에코백 제작'},
+  {id:4,name:'세계 평화 기원 영상 제작하기',teacher:'박미진, 손세영',type:'통합',max:33,desc:'세계 분쟁 지역 조사 후 평화적 해결 방안을 담은 개사·단편 광고 영상 제작'},
+  {id:5,name:'더 나은 세상을 만드는 디지털 시민을 위한 제안',teacher:'이해영, 최영',type:'통합',max:33,desc:'디지털 시민 의식 함양 캠페인 영상 제작(제안서·스토리보드·영상 제작)'},
+  {id:6,name:'공감과 존엄 프로젝트',teacher:'김정미, 윤경순',type:'통합',max:33,desc:'차별을 끄고 고유함에 동감하며 존엄성을 켜는 사회·법학·교육·언론 융합 프로젝트'},
+  {id:7,name:'통계로 읽는 사회, 글로 표현하는 세상',teacher:'김지연, 강윤미',type:'통합',max:33,desc:'디지털 시민 사회의 통계 자료를 비판적으로 분석하고 논리적 글쓰기·발표 활동'},
+  {id:8,name:'플레이 그 이상의 스포츠',teacher:'조은비',type:'A전용',max:33,desc:'현대 스포츠 이슈를 탐구하고 지속 가능한 스포츠 문화 실천 방안 모색'},
+  {id:9,name:'나만의 영자신문 만들기',teacher:'장윤실',type:'A전용',max:33,desc:'진로 및 관심 분야 영어 기사 작성으로 영어 글쓰기 자신감 기르기'},
+  {id:10,name:'영상, 나의 문장에 담다',teacher:'김지안',type:'A전용',max:25,desc:'관심 분야 영상 시청 후 내용에 자신의 생각을 덧붙여 글로 표현하기 (정원 25명)'}
+];
+const B_PROGS = [
+  {id:1,name:'한국사 문화 콘텐츠 제작 프로젝트',teacher:'김소영, 황성엽',type:'통합',max:33,desc:'한국사의 중요한 인물·사건·문화유산을 탐구하고 SNS·영상·굿즈 등 문화 콘텐츠 제작'},
+  {id:2,name:'화성 이주 프로젝트',teacher:'김시연, 문경영',type:'통합',max:33,desc:'누가 화성에 떠나야 할지 탐구하는 영어 역할극·사회 법 만들기 활동'},
+  {id:3,name:'픽토그램을 활용한 디지털 시민문화 조성 프로젝트',teacher:'강경극, 신덕희',type:'통합',max:33,desc:'공학 도구로 픽토그램 제작, 디지털 시민문화 주제 카드뉴스·포스터·에코백 제작'},
+  {id:4,name:'세계 평화 기원 영상 제작하기',teacher:'박미진, 손세영',type:'통합',max:33,desc:'세계 분쟁 지역 조사 후 평화적 해결 방안을 담은 개사·단편 광고 영상 제작'},
+  {id:5,name:'더 나은 세상을 만드는 디지털 시민을 위한 제안',teacher:'이해영, 최영',type:'통합',max:33,desc:'디지털 시민 의식 함양 캠페인 영상 제작(제안서·스토리보드·영상 제작)'},
+  {id:6,name:'공감과 존엄 프로젝트',teacher:'김정미, 윤경순',type:'통합',max:33,desc:'차별을 끄고 고유함에 동감하며 존엄성을 켜는 사회·법학·교육·언론 융합 프로젝트'},
+  {id:7,name:'통계로 읽는 사회, 글로 표현하는 세상',teacher:'김지연, 강윤미',type:'통합',max:33,desc:'디지털 시민 사회의 통계 자료를 비판적으로 분석하고 논리적 글쓰기·발표 활동'},
+  {id:8,name:'버터런으로 실천하는 디지털 디톡스',teacher:'김승빈',type:'B전용',max:33,desc:'달리기를 통해 생크림의 버터화 과정을 탐구하고 과학적 원리 알아보기'},
+  {id:9,name:'AI와 함께하는 글로벌 비즈니스 기획하기 프로젝트',teacher:'이미정',type:'B전용',max:33,desc:'국가별 소비문화 분석, 해외 맞춤형 상품과 마케팅 전략 설계'},
+  {id:10,name:'글로벌 이슈에 대한 국가별 문화적 대응 방식 비교 및 원서 탐구',teacher:'염혜원',type:'B전용',max:33,desc:'동일 글로벌 이슈에 대한 각국의 문화적·역사적 대응 차이를 영미권 원서로 분석·발표'}
+];
+const CD_PROGS = [
+  {id:1,name:'디지털마케팅 기획자',max:32,desc:'SNS·유튜브·광고 등 디지털 플랫폼에서 브랜드 전략을 수립하고 캠페인 운영'},
+  {id:2,name:'스마트관광플래너',max:32,desc:'AI·빅데이터·AR/VR 등 ICT 기술로 맞춤형 여행 코스와 스마트 관광상품 기획'},
+  {id:3,name:'로봇공학자',max:32,desc:'의료용·서비스용 로봇 시스템을 설계·개발·제어하는 전문가'},
+  {id:4,name:'인공지능전문가',max:32,desc:'머신러닝·딥러닝·자연어 처리 등 AI 알고리즘을 설계하고 모델 개발'},
+  {id:5,name:'생명과학연구원',max:32,desc:'신약 개발·질병 연구·유전자 연구 등 생명과학 분야 실험·데이터 분석'},
+  {id:6,name:'심리상담사',max:32,desc:'스트레스·불안·대인관계 문제 등 심리적 문제를 상담하고 정신 건강 지원'},
+  {id:7,name:'기능성식품연구원',max:32,desc:'건강 증진 효과를 입증하고 새로운 기능성 식품을 연구·개발하는 전문가'},
+  {id:8,name:'화장품연구원',max:32,desc:'피부과학·화학·생명공학 지식으로 새로운 화장품 성분 탐색 및 제품 개발'},
+  {id:9,name:'친환경건축가',max:32,desc:'에너지 효율 높은 그린빌딩(Green Building)을 전문적으로 설계'},
+  {id:10,name:'1인 미디어 크리에이터',max:32,desc:'유튜브·틱톡·인스타그램 등에 영상·이미지·글 등 콘텐츠를 직접 기획·제작·배포'}
+];
+
+function isOpen(){ return PRACTICE_MODE || (new Date()>=OPEN && new Date()<=CLOSE); }
+function isClosed(){ return !PRACTICE_MODE && new Date()>CLOSE; }
+
+// ── 서버 현황 캐시 (실시간 정원: 모든 학생이 공유) ──
+var serverCounts = {A:{},B:{},C:{},D:{}};
+// 기존 EA_KEY/EB_KEY/EC_KEY/ED_KEY 호출 호환: 키 문자열을 타임 문자로 매핑
+function getE(k){
+  if(k===EA_KEY) return serverCounts.A||{};
+  if(k===EB_KEY) return serverCounts.B||{};
+  if(k===EC_KEY) return serverCounts.C||{};
+  if(k===ED_KEY) return serverCounts.D||{};
+  return {};
+}
+function setE(k,e){ /* no-op: 현황은 서버가 관리. 로컬 증가분은 무시하고 fetchCounts로 갱신 */ }
+
+// 서버에서 실시간 현황 가져오기
+async function fetchCounts(){
+  try{
+    var r=await fetch(SCRIPT_URL+'?action=getCounts',{method:'GET',mode:'cors'});
+    var d=await r.json();
+    if(d&&d.success){ serverCounts={A:d.A||{},B:d.B||{},C:d.C||{},D:d.D||{}}; }
+  }catch(e){}
+  return serverCounts;
+}
+
+// 내 신청 내역을 서버에서 조회
+async function loadRegServer(){
+  if(!student) return null;
+  try{
+    var r=await fetch(SCRIPT_URL+'?action=getMyReg&grade=1&cls='+student.cls+'&num='+student.num,{method:'GET',mode:'cors'});
+    var d=await r.json();
+    if(d&&d.success&&(d.a||d.b||d.c||d.d)) return {a:d.a,b:d.b,c:d.c,d:d.d};
+  }catch(e){}
+  return null;
+}
+function loadReg(){ return null; } // 동기 호환용(실사용은 loadRegServer)
+function saveReg(r){ /* no-op: 서버가 저장 */ }
+
+async function sha256(str){
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+}
+
+// POST 저장 (CORS 모드 + 응답 확인). 2학년 검증 방식.
+async function postToSheets(payload){
+  try{
+    var r=await fetch(SCRIPT_URL,{method:'POST',mode:'cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+    return await r.json();
+  } catch(e){ return {status:'error',success:false}; }
+}
+
+var student=null, selA=null, selB=null, selC=null, selD=null, curStep='a';
+
+// 게이트
+function checkGate(){
+  var v=document.getElementById('inp-gate').value.trim();
+  if(v===GATE_CODE){ sessionStorage.setItem(GK,'1'); showScreen('v-login'); }
+  else { document.getElementById('gate-msg').innerHTML='<div class="al al-err">접속 코드가 올바르지 않습니다.</div>'; }
+}
+function openGate(){ showScreen('v-gate'); }
+if(sessionStorage.getItem(GK)==='1') openGate();
+
+// 이벤트 바인딩 (DOMContentLoaded 이후)
+
+function showScreen(id){
+  ['v-countdown','v-gate','v-login','v-main','v-closed'].forEach(function(s){
+    var el=document.getElementById(s);
+    if(el) el.style.display=(s===id)?'':'none';
+  });
+}
+var cdInt=null;
+function initScreen(){
+  if(isClosed()){ showScreen('v-closed'); return; }
+  if(isOpen()){
+    if(sessionStorage.getItem(GK)==='1') showScreen('v-login');
+    else showScreen('v-gate');
+    return;
+  }
+  showScreen('v-countdown');
+  updateCD();
+  cdInt=setInterval(function(){
+    if(isOpen()){ clearInterval(cdInt); showScreen('v-gate'); }
+    else { updateCD(); }
+  },1000);
+}
+function updateCD(){
+  var diff=OPEN-new Date();
+  if(diff<=0) return;
+  var d=Math.floor(diff/86400000);
+  var h=Math.floor((diff%86400000)/3600000);
+  var mn=Math.floor((diff%3600000)/60000);
+  var s=Math.floor((diff%60000)/1000);
+  var el=document.getElementById('cd-display');
+  if(!el) return;
+  el.innerHTML='<div class="cd-grid">'+
+    '<div class="cd-unit"><div class="cd-num">'+d+'</div><div class="cd-lbl">일</div></div>'+
+    '<div class="cd-unit"><div class="cd-num">'+String(h).padStart(2,'0')+'</div><div class="cd-lbl">시간</div></div>'+
+    '<div class="cd-unit"><div class="cd-num">'+String(mn).padStart(2,'0')+'</div><div class="cd-lbl">분</div></div>'+
+    '<div class="cd-unit"><div class="cd-num">'+String(s).padStart(2,'0')+'</div><div class="cd-lbl">초</div></div>'+
+    '</div>';
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  initScreen();
+  document.getElementById('gate-btn').addEventListener('click', checkGate);
+  document.getElementById('inp-gate').addEventListener('keydown', function(e){ if(e.key==='Enter') checkGate(); });
+  document.getElementById('login-btn').addEventListener('click', doLogin);
+  document.getElementById('inp-dob').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+  document.getElementById('btn-b-prev').addEventListener('click', function(){ goStep('a'); });
+  document.getElementById('btn-b-next').addEventListener('click', function(){ goStep('c'); });
+  document.getElementById('btn-c-prev').addEventListener('click', function(){ goStep('b'); });
+  document.getElementById('btn-c-next').addEventListener('click', function(){ goStep('d'); });
+  document.getElementById('btn-d-prev').addEventListener('click', function(){ goStep('c'); });
+  document.getElementById('btn-d-next').addEventListener('click', function(){ goStep('confirm'); });
+  document.getElementById('btn-cf-prev').addEventListener('click', function(){ goStep('d'); });
+  document.getElementById('btn-submit').addEventListener('click', doSubmit);
+});
+
+async function doLogin(){
+  var g='1', c=document.getElementById('inp-class').value;
+  var n=document.getElementById('inp-num').value.trim();
+  var nm=document.getElementById('inp-name').value.trim();
+  var dob=document.getElementById('inp-dob').value.trim();
+  var msg=document.getElementById('login-msg');
+  var btn=document.getElementById('login-btn');
+  if(!c){ msg.innerHTML='<div class="al al-err">반을 선택해주세요.</div>'; return; }
+  if(!n){ msg.innerHTML='<div class="al al-err">번호를 입력해주세요.</div>'; return; }
+  if(!nm){ msg.innerHTML='<div class="al al-err">이름을 입력해주세요.</div>'; return; }
+  if(!dob||dob.length!==8||!/^\d{8}$/.test(dob)){ msg.innerHTML='<div class="al al-err">생년월일 8자리를 정확히 입력해주세요. (예: 20101015)</div>'; return; }
+  btn.disabled=true; btn.textContent='확인 중...';
+  var key=g+'-'+c+'-'+n;
+  var expected=STUDENT_HASH[key];
+  if(!expected){ msg.innerHTML='<div class="al al-err">해당 학번 정보를 찾을 수 없습니다.</div>'; btn.disabled=false; btn.textContent='입장하기'; return; }
+  var actual=await sha256(key+'|'+nm.replace(/\s/g,'')+'|'+dob+'|'+HASH_SALT);
+  btn.disabled=false; btn.textContent='입장하기';
+  if(actual!==expected){ msg.innerHTML='<div class="al al-err">이름 또는 생년월일이 일치하지 않습니다. 본인 정보로 다시 입력해주세요.</div>'; return; }
+  student={grade:g,cls:c,num:n,name:nm};
+  document.getElementById('top-badge').innerHTML='<strong>1학년 '+c+'반 '+n+'번</strong><br>'+nm;
+  showScreen('v-main');
+  await fetchCounts();                 // 서버 실시간 현황 로드
+  var saved=await loadRegServer();     // 서버에서 내 신청 조회
+  if(saved){ selA=saved.a; selB=saved.b; selC=saved.c; selD=saved.d; showDoneView(); }
+  else {
+    if(!isOpen()&&!isClosed()) document.getElementById('main-banner').innerHTML='<div class="al al-warn">⏰ 신청 기간 전입니다. 7.7(화) 17:00부터 신청 가능합니다.</div>';
+    else if(isClosed()) document.getElementById('main-banner').innerHTML='<div class="al al-err">신청 기간이 종료되었습니다.</div>';
+    goStep('a');
+  }
+}
+
+function goStep(step){
+  var steps=['a','b','c','d','confirm'];
+  steps.forEach(function(s){ document.getElementById('step-'+s).style.display=(s===step)?'':'none'; });
+  curStep=step;
+  updateStepIndicator();
+  if(step==='a') renderGridA();
+  if(step==='b') renderGridB();
+  if(step==='c') renderGridC();
+  if(step==='d') renderGridD();
+  if(step==='confirm') renderConfirm();
+  window.scrollTo(0,0);
+}
+
+function updateStepIndicator(){
+  var steps=[{key:'a',label:'A타임'},{key:'b',label:'B타임'},{key:'c',label:'C타임'},{key:'d',label:'D타임'},{key:'confirm',label:'확인'}];
+  var order=['a','b','c','d','confirm'];
+  var cur=order.indexOf(curStep);
+  var html='';
+  steps.forEach(function(s,i){
+    var done=i<cur, active=i===cur;
+    var cls='step-item'+(done?' done':'')+(active?' active':'');
+    html+='<div class="'+cls+'"><div class="step-circle">'+(done?'&#10003;':(i+1))+'</div><div class="step-label">'+s.label+'</div></div>';
+  });
+  document.getElementById('step-indicator').innerHTML=html;
+}
+
+function makePC(p, cnt, isSelected, isDisabled, isLocked, isSameC, tagText, extraBadge, prefix){
+  var pref=prefix||'pc';
+  var pct=Math.min(100,Math.round(cnt/p.max*100));
+  var full=cnt>=p.max;
+  var bc=full?'#E74C3C':(pct>=80?'#E67E22':'#1D9E75');
+  var sc=full?'seats-full':(pct>=80?'seats-warn':'seats-ok');
+  var cls='pc'+(isSelected?' selected':'')+(isLocked?' locked':'')+(isDisabled?' disabled':'')+(isSameC?' same-c':'');
+  var numCls='pc-num'+(isDisabled&&!isSelected?' gray':'');
+  var html='<div class="'+cls+'" id="'+pref+'-'+p.id+'">';
+  html+='<div class="pc-header"><div class="'+numCls+'">'+p.id+'</div><div class="pc-name">'+p.name+'</div></div>';
+  html+='<div class="pc-meta"><span class="tag '+tagText+'"></span>';
+  if(p.teacher) html+=' &nbsp;👤 '+p.teacher;
+  html+='</div>';
+  html+='<div class="pc-desc">'+p.desc+'</div>';
+  html+='<div class="pc-bar-wrap">';
+  html+='<span class="pc-seats '+sc+'">'+(full?'마감':cnt+'/'+p.max)+'</span>';
+  html+='<div class="bar-bg"><div class="bar-fill" style="width:'+pct+'%;background:'+bc+'"></div></div>';
+  html+='</div>';
+  if(isLocked) html+='<div class="lock-badge">🔒 자동 배정</div>';
+  if(isSameC) html+='<div class="same-c-badge">🚫 C타임에서 이미 선택한 직업</div>';
+  if(extraBadge) html+='<div class="lock-badge">'+extraBadge+'</div>';
+  html+='</div>';
+  return html;
+}
+
+function renderGridA(){
+  var ea=getE(EA_KEY);
+  var html='';
+  A_PROGS.forEach(function(p){
+    var cnt=ea[p.id]||0, full=cnt>=p.max, sel=selA===p.id;
+    var tagText=p.type==='통합'?'tag-통합 A/B통합':'tag-A A전용';
+    html+=makePC(p,cnt,sel,full&&!sel,false,false,tagText,'','pca');
+  });
+  document.getElementById('grid-a').innerHTML=html;
+  A_PROGS.forEach(function(p){
+    var ea2=getE(EA_KEY); var cnt=ea2[p.id]||0; var full=cnt>=p.max;
+    if(!full||selA===p.id){
+      document.getElementById('pca-'+p.id).addEventListener('click', function(){ selectA(p.id); });
+    }
+  });
+}
+function selectA(id){
+  var ea=getE(EA_KEY); var p=A_PROGS.find(function(x){ return x.id===id; });
+  if((ea[id]||0)>=p.max){ alert('이 프로그램은 마감되었습니다.'); renderGridA(); return; }
+  selA=id;
+  if(INTEGRATED_IDS.indexOf(id)!==-1){ selB=id; } else { selB=null; }
+  selC=null; selD=null;
+  goStep('b');
+}
+
+function renderGridB(){
+  var isInt=INTEGRATED_IDS.indexOf(selA)!==-1;
+  var eb=getE(EB_KEY);
+  var notice=document.getElementById('b-notice');
+  var html='';
+  if(isInt){
+    var p=B_PROGS.find(function(x){ return x.id===selA; });
+    notice.innerHTML='<div class="al al-warn" style="font-size:12px">⚠️ <strong>A/B통합 프로그램</strong>을 선택하셨습니다. B타임에도 <strong>"'+p.name+'"</strong>이(가) 자동 배정됩니다.</div>';
+    B_PROGS.slice(0,7).forEach(function(p2){
+      var cnt=eb[p2.id]||0, locked=p2.id===selA;
+      var tagText='tag-통합 A/B통합';
+      html+=makePC(p2,cnt,locked,!locked,locked,false,tagText,'','pcb');
+    });
+    document.getElementById('btn-b-next').disabled=false;
+  } else {
+    notice.innerHTML='<div class="al al-info" style="font-size:12px">A타임('+selA+'번) 선택과 무관하게 B타임 프로그램을 자유롭게 선택하세요.</div>';
+    B_PROGS.forEach(function(p){
+      var cnt=eb[p.id]||0, full=cnt>=p.max, sel=selB===p.id;
+      var tagText=p.type==='통합'?'tag-통합 A/B통합':'tag-B B전용';
+      html+=makePC(p,cnt,sel,full&&!sel,false,false,tagText,'','pcb');
+    });
+    document.getElementById('btn-b-next').disabled=(selB===null);
+  }
+  document.getElementById('grid-b').innerHTML=html;
+  if(!isInt){
+    B_PROGS.forEach(function(p){
+      var eb2=getE(EB_KEY); var cnt=eb2[p.id]||0; var full=cnt>=p.max;
+      if(!full||selB===p.id){
+        var el=document.getElementById('pcb-'+p.id);
+        if(el) el.addEventListener('click', function(){ selectB(p.id); });
+      }
+    });
+  }
+}
+function selectB(id){
+  var eb=getE(EB_KEY); var p=B_PROGS.find(function(x){ return x.id===id; });
+  if((eb[id]||0)>=p.max){ alert('마감되었습니다.'); renderGridB(); return; }
+  selB=id; renderGridB(); document.getElementById('btn-b-next').disabled=false;
+}
+
+function renderGridC(){
+  var ec=getE(EC_KEY); var html='';
+  CD_PROGS.forEach(function(p){
+    var cnt=ec[p.id]||0, full=cnt>=p.max, sel=selC===p.id;
+    html+=makePC(p,cnt,sel,full&&!sel,false,false,'tag-C C타임 진로체험','','pcc');
+  });
+  document.getElementById('grid-c').innerHTML=html;
+  CD_PROGS.forEach(function(p){
+    var ec2=getE(EC_KEY); var cnt=ec2[p.id]||0; var full=cnt>=p.max;
+    if(!full||selC===p.id){
+      var el=document.getElementById('pcc-'+p.id);
+      if(el) el.addEventListener('click', function(){ selectC(p.id); });
+    }
+  });
+  document.getElementById('btn-c-next').disabled=(selC===null);
+}
+function selectC(id){
+  var ec=getE(EC_KEY); var p=CD_PROGS.find(function(x){ return x.id===id; });
+  if((ec[id]||0)>=p.max){ alert('마감되었습니다.'); renderGridC(); return; }
+  selC=id; if(selD===id) selD=null;
+  renderGridC(); document.getElementById('btn-c-next').disabled=false;
+}
+
+function renderGridD(){
+  var ed=getE(ED_KEY); var html='';
+  CD_PROGS.forEach(function(p){
+    var cnt=ed[p.id]||0, full=cnt>=p.max, sel=selD===p.id, sameC=(selC===p.id);
+    html+=makePC(p,cnt,sel,(full||sameC)&&!sel,false,sameC,'tag-D D타임 진로체험','','pcd');
+  });
+  document.getElementById('grid-d').innerHTML=html;
+  CD_PROGS.forEach(function(p){
+    var ed2=getE(ED_KEY); var cnt=ed2[p.id]||0; var full=cnt>=p.max;
+    if(!full&&selC!==p.id){
+      var el=document.getElementById('pcd-'+p.id);
+      if(el) el.addEventListener('click', function(){ selectD(p.id); });
+    }
+  });
+  document.getElementById('btn-d-next').disabled=(selD===null);
+}
+function selectD(id){
+  if(selC===id){ alert('C타임과 동일한 직업은 선택할 수 없습니다.'); return; }
+  var ed=getE(ED_KEY); var p=CD_PROGS.find(function(x){ return x.id===id; });
+  if((ed[id]||0)>=p.max){ alert('마감되었습니다.'); renderGridD(); return; }
+  selD=id; renderGridD(); document.getElementById('btn-d-next').disabled=false;
+}
+
+function renderConfirm(){
+  var pa=A_PROGS.find(function(x){ return x.id===selA; });
+  var pb=B_PROGS.find(function(x){ return x.id===selB; });
+  var pc=CD_PROGS.find(function(x){ return x.id===selC; });
+  var pd=CD_PROGS.find(function(x){ return x.id===selD; });
+  var autoB=INTEGRATED_IDS.indexOf(selA)!==-1?'(A/B통합 자동배정)':'';
+  var html='<div class="confirm-box"><div class="confirm-head">📋 신청 내역 확인</div>';
+  html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-통합">A타임</span></div><div class="confirm-val"><strong>'+pa.name+'</strong><br><span style="font-size:11px;color:var(--mu)">'+pa.teacher+'</span></div></div>';
+  html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-B">B타임</span></div><div class="confirm-val"><strong>'+pb.name+'</strong><br><span style="font-size:11px;color:var(--mu)">'+pb.teacher+' '+autoB+'</span></div></div>';
+  html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-C">C타임</span></div><div class="confirm-val"><strong>'+pc.name+'</strong></div></div>';
+  html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-D">D타임</span></div><div class="confirm-val"><strong>'+pd.name+'</strong></div></div>';
+  html+='<div class="confirm-row"><div class="confirm-key">신청자</div><div class="confirm-val">1학년 '+student.cls+'반 '+student.num+'번 '+student.name+'</div></div>';
+  html+='</div>';
+  document.getElementById('confirm-content').innerHTML=html;
+}
+
+async function doSubmit(){
+  var btn=document.getElementById('btn-submit');
+  btn.disabled=true; btn.textContent='처리 중...';
+  var pa=A_PROGS.find(function(x){ return x.id===selA; });
+  var pb=B_PROGS.find(function(x){ return x.id===selB; });
+  var pc=CD_PROGS.find(function(x){ return x.id===selC; });
+  var pd=CD_PROGS.find(function(x){ return x.id===selD; });
+
+  // 서버에 저장 요청 (서버 키: cls,num,sname,a,b,c,d). 정원·C≠D 검증은 서버가 최종 판단.
+  var d=await postToSheets({action:'save',grade:1,cls:student.cls,num:student.num,sname:student.name,a:selA,b:selB,c:selC,d:selD});
+
+  if(d && d.success){
+    selA=d.a; selB=d.b; selC=d.c; selD=d.d;
+    await fetchCounts();          // 현황 갱신
+    showDoneView();
+    return;
+  }
+  // 실패 처리
+  btn.disabled=false; btn.textContent='✅ 신청 완료';
+  await fetchCounts();
+  if(d && d.error==='same_cd'){ alert('C타임과 D타임은 서로 다른 직업을 선택해야 합니다.'); goStep('d'); return; }
+  if(d && d.error==='full_a'){ alert('A타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다.'); goStep('a'); return; }
+  if(d && d.error==='full_b'){ alert('B타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다.'); goStep('b'); return; }
+  if(d && d.error==='full_c'){ alert('C타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다.'); goStep('c'); return; }
+  if(d && d.error==='full_d'){ alert('D타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다.'); goStep('d'); return; }
+  alert('저장에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+}
+
+function showDoneView(){
+  document.getElementById('v-steps').style.display='none';
+  document.getElementById('v-done').style.display='';
+  var pa=A_PROGS.find(function(x){ return x.id===selA; });
+  var pb=B_PROGS.find(function(x){ return x.id===selB; });
+  var pc=CD_PROGS.find(function(x){ return x.id===selC; });
+  var pd=CD_PROGS.find(function(x){ return x.id===selD; });
+  var autoB=INTEGRATED_IDS.indexOf(selA)!==-1?' (A/B통합 자동배정)':'';
+  document.getElementById('main-banner').innerHTML='<div class="al al-ok">✅ <strong>수강 신청이 완료되었습니다!</strong></div>';
+  var html='<div class="confirm-box"><div class="confirm-head">🎉 신청 완료 내역</div>';
+  html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-통합">A타임</span></div><div class="confirm-val"><strong>'+pa.name+'</strong></div></div>';
+  html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-B">B타임</span></div><div class="confirm-val"><strong>'+pb.name+'</strong>'+autoB+'</div></div>';
+  html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-C">C타임</span></div><div class="confirm-val"><strong>'+pc.name+'</strong></div></div>';
+  html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-D">D타임</span></div><div class="confirm-val"><strong>'+pd.name+'</strong></div></div>';
+  html+='<div class="confirm-row"><div class="confirm-key">신청자</div><div class="confirm-val">1학년 '+student.cls+'반 '+student.num+'번 '+student.name+'</div></div>';
+  html+='</div><div class="al al-info" style="font-size:12px">신청 기간 내에는 언제든 변경할 수 있습니다.</div>';
+  if(isOpen()){
+    html+='<button id="btn-change" class="btn" style="margin-top:12px;width:100%">✏️ 신청 변경하기</button>';
+  }
+  document.getElementById('done-content').innerHTML=html;
+  var bc=document.getElementById('btn-change');
+  if(bc){ bc.addEventListener('click', async function(){
+    await fetchCounts();
+    document.getElementById('v-done').style.display='none';
+    document.getElementById('v-steps').style.display='';
+    document.getElementById('main-banner').innerHTML='';
+    goStep('a');
+  }); }
+}
+
+</script>
+</body>
+</html>
