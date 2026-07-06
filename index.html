@@ -302,10 +302,22 @@ async function sha256(str){
 
 // POST 저장 (CORS 모드 + 응답 확인). 2학년 검증 방식.
 async function postToSheets(payload){
-  try{
-    var r=await fetch(SCRIPT_URL,{method:'POST',mode:'cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
-    return await r.json();
-  } catch(e){ return {status:'error',success:false}; }
+  // 최대 4회 자동 재시도. 서버 혼잡(busy)/네트워크 실패 시 잠시 후 스스로 다시 시도.
+  var delays=[0, 1500, 3000, 5000];
+  var last={status:'error',success:false};
+  for(var i=0;i<delays.length;i++){
+    if(delays[i]>0) await new Promise(function(res){ setTimeout(res, delays[i]); });
+    try{
+      var r=await fetch(SCRIPT_URL,{method:'POST',mode:'cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+      var d=await r.json();
+      // 성공이거나, 재시도해도 소용없는 확정 실패(정원마감·C=D 등)는 즉시 반환
+      if(d && (d.success || (d.error && d.error!=='busy' && d.error!=='server_error' && d.error!=='register_error'))){
+        return d;
+      }
+      last=d||last; // busy/일시오류면 다음 루프에서 재시도
+    } catch(e){ last={status:'error',success:false}; }
+  }
+  return last;
 }
 
 var student=null, selA=null, selB=null, selC=null, selD=null, curStep='a';
@@ -586,13 +598,14 @@ function renderConfirm(){
 
 async function doSubmit(){
   var btn=document.getElementById('btn-submit');
-  btn.disabled=true; btn.textContent='처리 중...';
+  btn.disabled=true; btn.textContent='저장 중입니다... 잠시만 기다려 주세요';
   var pa=A_PROGS.find(function(x){ return x.id===selA; });
   var pb=B_PROGS.find(function(x){ return x.id===selB; });
   var pc=CD_PROGS.find(function(x){ return x.id===selC; });
   var pd=CD_PROGS.find(function(x){ return x.id===selD; });
 
   // 서버에 저장 요청 (서버 키: cls,num,sname,a,b,c,d). 정원·C≠D 검증은 서버가 최종 판단.
+  // postToSheets가 혼잡 시 자동 재시도하므로, 학생은 버튼을 여러 번 누를 필요가 없음.
   var d=await postToSheets({action:'save',grade:1,cls:student.cls,num:student.num,sname:student.name,a:selA,b:selB,c:selC,d:selD});
 
   if(d && d.success){
@@ -605,11 +618,12 @@ async function doSubmit(){
   btn.disabled=false; btn.textContent='✅ 신청 완료';
   await fetchCounts();
   if(d && d.error==='same_cd'){ alert('C타임과 D타임은 서로 다른 직업을 선택해야 합니다.'); goStep('d'); return; }
-  if(d && d.error==='full_a'){ alert('A타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다.'); goStep('a'); return; }
-  if(d && d.error==='full_b'){ alert('B타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다.'); goStep('b'); return; }
-  if(d && d.error==='full_c'){ alert('C타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다.'); goStep('c'); return; }
-  if(d && d.error==='full_d'){ alert('D타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다.'); goStep('d'); return; }
-  alert('저장에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+  if(d && d.error==='full_a'){ alert('A타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다. 다른 프로그램을 선택해 주세요.'); goStep('a'); return; }
+  if(d && d.error==='full_b'){ alert('B타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다. 다른 프로그램을 선택해 주세요.'); goStep('b'); return; }
+  if(d && d.error==='full_c'){ alert('C타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다. 다른 프로그램을 선택해 주세요.'); goStep('c'); return; }
+  if(d && d.error==='full_d'){ alert('D타임 「'+(d.name||'')+'」이(가) 방금 마감되었습니다. 다른 프로그램을 선택해 주세요.'); goStep('d'); return; }
+  // 혼잡/일시 오류: 연타를 막기 위해 명확히 안내
+  alert('접속자가 많아 저장이 지연되고 있습니다.\n\n※ 저장 버튼을 여러 번 누르지 마세요. 중복 신청될 수 있습니다.\n10~20초 후 「신청 완료」를 한 번만 다시 눌러 주세요.');
 }
 
 function showDoneView(){
