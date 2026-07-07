@@ -288,7 +288,7 @@ async function loadRegServer(){
   try{
     var r=await fetch(SCRIPT_URL+'?action=getMyReg&grade=1&cls='+student.cls+'&num='+student.num,{method:'GET',mode:'cors'});
     var d=await r.json();
-    if(d&&d.success&&(d.a||d.b||d.c||d.d)) return {a:d.a,b:d.b,c:d.c,d:d.d};
+    if(d&&d.success&&(d.a||d.b||d.c||d.d)){ savedAt=d.savedAt||''; return {a:d.a,b:d.b,c:d.c,d:d.d}; }
   }catch(e){}
   return null;
 }
@@ -321,6 +321,7 @@ async function postToSheets(payload){
 }
 
 var student=null, selA=null, selB=null, selC=null, selD=null, curStep='a';
+var savedAt='';  // 마지막 저장 시각(서버 신청시각)
 
 // 게이트
 function checkGate(){
@@ -610,6 +611,7 @@ async function doSubmit(){
 
   if(d && d.success){
     selA=d.a; selB=d.b; selC=d.c; selD=d.d;
+    savedAt=d.savedAt||'';
     await fetchCounts();          // 현황 갱신
     showDoneView();
     return;
@@ -641,7 +643,8 @@ function showDoneView(){
   html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-C">C타임</span></div><div class="confirm-val"><strong>'+pc.name+'</strong></div></div>';
   html+='<div class="confirm-row"><div class="confirm-key"><span class="tag tag-D">D타임</span></div><div class="confirm-val"><strong>'+pd.name+'</strong></div></div>';
   html+='<div class="confirm-row"><div class="confirm-key">신청자</div><div class="confirm-val">1학년 '+student.cls+'반 '+student.num+'번 '+student.name+'</div></div>';
-  html+='</div><div class="al al-info" style="font-size:12px">신청 기간 내에는 언제든 변경할 수 있습니다.</div>';
+  if(savedAt){ html+='<div class="confirm-row"><div class="confirm-key">저장 시각</div><div class="confirm-val"><strong>'+savedAt+'</strong></div></div>'; }
+  html+='</div><div class="al al-info" style="font-size:12px">이 화면을 캡처해 두세요. 저장 시각이 표시된 「신청 완료 내역」이 실제 저장된 내용입니다. 신청 기간 내에는 언제든 변경할 수 있습니다.</div>';
   if(isOpen()){
     html+='<button id="btn-change" class="btn" style="margin-top:12px;width:100%">✏️ 신청 변경하기</button>';
   }
