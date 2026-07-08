@@ -488,10 +488,10 @@ function renderGridA(){
 }
 function selectA(id){
   var ea=getE(EA_KEY); var p=A_PROGS.find(function(x){ return x.id===id; });
-  if((ea[id]||0)>=p.max){ alert('이 프로그램은 마감되었습니다.'); renderGridA(); return; }
+  if((ea[id]||0)>=p.max && selA!==id){ alert('이 프로그램은 마감되었습니다. 다른 프로그램을 선택하세요.'); renderGridA(); return; }
   selA=id;
-  if(INTEGRATED_IDS.indexOf(id)!==-1){ selB=id; } else { selB=null; }
-  selC=null; selD=null;
+  if(INTEGRATED_IDS.indexOf(id)!==-1){ selB=id; } else if(INTEGRATED_IDS.indexOf(selB)!==-1){ selB=null; }
+  // C·D는 유지 (A만 바꾸는 학생의 선택이 초기화되지 않도록)
   goStep('b');
 }
 
@@ -531,7 +531,7 @@ function renderGridB(){
 }
 function selectB(id){
   var eb=getE(EB_KEY); var p=B_PROGS.find(function(x){ return x.id===id; });
-  if((eb[id]||0)>=p.max){ alert('마감되었습니다.'); renderGridB(); return; }
+  if((eb[id]||0)>=p.max && selB!==id){ alert('이 프로그램은 마감되었습니다. 다른 프로그램을 선택하세요.'); renderGridB(); return; }
   selB=id; renderGridB(); document.getElementById('btn-b-next').disabled=false;
 }
 
@@ -553,7 +553,8 @@ function renderGridC(){
 }
 function selectC(id){
   var ec=getE(EC_KEY); var p=CD_PROGS.find(function(x){ return x.id===id; });
-  if((ec[id]||0)>=p.max){ alert('마감되었습니다.'); renderGridC(); return; }
+  // 본인이 이미 신청해 둔 자리는 마감이어도 유지 가능. 새로 고르는 경우에만 마감 차단.
+  if((ec[id]||0)>=p.max && selC!==id){ alert('이 프로그램은 마감되었습니다. 다른 프로그램을 선택하세요.'); renderGridC(); return; }
   selC=id; if(selD===id) selD=null;
   renderGridC(); document.getElementById('btn-c-next').disabled=false;
 }
@@ -567,7 +568,8 @@ function renderGridD(){
   document.getElementById('grid-d').innerHTML=html;
   CD_PROGS.forEach(function(p){
     var ed2=getE(ED_KEY); var cnt=ed2[p.id]||0; var full=cnt>=p.max;
-    if(!full&&selC!==p.id){
+    // 안 찬 자리 또는 본인이 이미 가진 자리(selD)면 클릭 가능. 단 C와 같은 건 불가.
+    if((!full || selD===p.id) && selC!==p.id){
       var el=document.getElementById('pcd-'+p.id);
       if(el) el.addEventListener('click', function(){ selectD(p.id); });
     }
@@ -577,7 +579,8 @@ function renderGridD(){
 function selectD(id){
   if(selC===id){ alert('C타임과 동일한 직업은 선택할 수 없습니다.'); return; }
   var ed=getE(ED_KEY); var p=CD_PROGS.find(function(x){ return x.id===id; });
-  if((ed[id]||0)>=p.max){ alert('마감되었습니다.'); renderGridD(); return; }
+  // 본인이 이미 신청해 둔 자리는 마감이어도 유지 가능. 새로 고르는 경우에만 마감 차단.
+  if((ed[id]||0)>=p.max && selD!==id){ alert('이 프로그램은 마감되었습니다. 다른 프로그램을 선택하세요.'); renderGridD(); return; }
   selD=id; renderGridD(); document.getElementById('btn-d-next').disabled=false;
 }
 
